@@ -26,6 +26,8 @@ You can specify more than 1 input file.
 twd input-a.html input-b.html
 ```
 
+This outputs the stylesheet which include classes needed by any of the input files.
+
 ## Watch files
 
 You can watch files with `-w, --watch` option.
