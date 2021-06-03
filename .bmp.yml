@@ -2,6 +2,7 @@ version: 0.0.1
 commit: 'chore: bump to v%.%.%'
 files:
   README.md:
-    - twindeno v%.%.%
-  main.ts:
+    - twd v%.%.%
+    - https://deno.land/x/twd@%.%.%/cli.ts
+  cli.ts:
     - 'const VERSION = "%.%.%";'

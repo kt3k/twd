@@ -6,12 +6,12 @@ import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
 import { generate } from "./mod.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
-const NAME = "twindeno";
+const NAME = "twd";
 const VERSION = "0.0.1";
 
 function usage() {
   console.log(`
-Usage: twindeno [-h|-v] <input files, ...> [-w][-o <output>]
+Usage: ${NAME} [-h|-v] <input files, ...> [-w][-o <output>]
 
 Options:
   -v, --version        Shows the version number.
@@ -83,7 +83,7 @@ export async function main(cliArgs: string[]): Promise<number> {
     });
 
     perform();
-    for await (const e of Deno.watchFs(files)) {
+    for await (const _e of Deno.watchFs(files)) {
       perform();
     }
     return 0;
