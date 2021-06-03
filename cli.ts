@@ -22,7 +22,7 @@ Options:
 }
 
 async function genStyles(files: string[]) {
-  return generate(await Promise.all(files.map(Deno.readTextFile)))
+  return generate(await Promise.all(files.map(Deno.readTextFile)));
 }
 
 async function writeStyles(output: string, files: string[]) {
@@ -74,7 +74,9 @@ export async function main(cliArgs: string[]): Promise<number> {
 
   if (watch) {
     if (!output) {
-      console.log("Error: --output option is not specified. You need to specify --output option with --watch option");
+      console.log(
+        "Error: --output option is not specified. You need to specify --output option with --watch option",
+      );
       return 1;
     }
 

@@ -1,2 +1,2 @@
 test:
-	deno test --no-check
+	deno test -A
