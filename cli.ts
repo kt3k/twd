@@ -3,7 +3,7 @@
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
-import { generate } from "./mod.ts";
+import { init, generate, VirtualSheet } from "./mod.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
@@ -14,20 +14,21 @@ function usage() {
 Usage: ${NAME} [-h|-v] <input files, ...> [-w][-o <output>]
 
 Options:
-  -v, --version        Shows the version number.
-  -h, --help           Shows the help message.
   -w, --watch          Watches the input file. If you set this option, you also need to specify -o option.
   -o, --output         Specifies the output file. If not specified, it prints in stdout.
+  -d, --debug          Output warnings during extracting tailwind classes.
+  -v, --version        Shows the version number.
+  -h, --help           Shows the help message.
 `.trim());
 }
 
-async function genStyles(files: string[]) {
-  return generate(await Promise.all(files.map(Deno.readTextFile)));
+async function genStyles(files: string[], sheet: VirtualSheet) {
+  return generate(await Promise.all(files.map(Deno.readTextFile)), sheet);
 }
 
-async function writeStyles(output: string, files: string[]) {
+async function writeStyles(output: string, files: string[], sheet: VirtualSheet) {
   console.log(`Writing styles to file '${output}'`);
-  await Deno.writeTextFile(output, await genStyles(files));
+  await Deno.writeTextFile(output, await genStyles(files, sheet));
 }
 
 type CliArgs = {
@@ -35,6 +36,7 @@ type CliArgs = {
   version: boolean;
   watch: boolean;
   output: string;
+  debug: boolean;
   _: string[];
 };
 
@@ -44,15 +46,17 @@ export async function main(cliArgs: string[]): Promise<number> {
     version,
     watch,
     output,
+    debug,
     _: files,
   } = parse(cliArgs, {
-    boolean: ["help", "version", "watch"],
+    boolean: ["help", "version", "watch", "debug"],
     string: ["output"],
     alias: {
       v: "version",
       h: "help",
       w: "watch",
       o: "output",
+      d: "debug",
     },
   }) as CliArgs;
 
@@ -72,6 +76,8 @@ export async function main(cliArgs: string[]): Promise<number> {
     return 1;
   }
 
+  const sheet = init({ mode: debug ? "warn" : "silent" });
+
   if (watch) {
     if (!output) {
       console.log(
@@ -81,7 +87,7 @@ export async function main(cliArgs: string[]): Promise<number> {
     }
 
     const perform = debounce(async () => {
-      await writeStyles(output, files);
+      await writeStyles(output, files, sheet);
     });
 
     perform();
@@ -92,10 +98,10 @@ export async function main(cliArgs: string[]): Promise<number> {
   }
 
   if (output) {
-    await writeStyles(output, files);
+    await writeStyles(output, files, sheet);
     return 0;
   }
-  console.log(await genStyles(files));
+  console.log(await genStyles(files, sheet));
   return 0;
 }
 
