@@ -7,7 +7,7 @@ import { generate } from "./mod.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
-const VERSION = "0.1.2";
+const VERSION = "0.1.3";
 
 function usage() {
   console.log(`
