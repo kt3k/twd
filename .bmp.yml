@@ -1,7 +1,7 @@
-version: 0.1.0
+version: 0.1.1
 commit: 'chore: bump to v%.%.%'
 files:
   README.md:
     - twd v%.%.%
-    - 'https://deno.land/x/twd@%.%.%/cli.ts'
+    - 'https://deno.land/x/twd@v%.%.%/cli.ts'
   cli.ts: const VERSION = "%.%.%";

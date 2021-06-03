@@ -1,4 +1,4 @@
-# twd v0.1.0
+# twd v0.1.1
 
 Simple tailwind like CLI tool for deno 🦕
 
@@ -7,7 +7,7 @@ This tool uses [twind](https://github.com/tw-in-js/twind) internally.
 # Install
 
 ```
-deno install --allow-read=. --allow-write=. -fq https://deno.land/x/twd@0.1.0/cli.ts
+deno install --allow-read=. --allow-write=. -fq https://deno.land/x/twd@v0.1.1/cli.ts
 ```
 
 # Usage
