@@ -1,5 +1,7 @@
 # twd v0.1.2
 
+[![ci](https://github.com/kt3k/twd/actions/workflows/ci.yml/badge.svg)](https://github.com/kt3k/twd/actions/workflows/ci.yml)
+
 Simple tailwind like CLI tool for deno 🦕
 
 This tool uses [twind](https://github.com/tw-in-js/twind) internally.
