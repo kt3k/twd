@@ -4,6 +4,7 @@
 /// <reference lib="esnext" />
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
 import { generate } from "./mod.ts";
+import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twindeno";
 const VERSION = "0.0.1";
@@ -77,8 +78,13 @@ export async function main(cliArgs: string[]): Promise<number> {
       return 1;
     }
 
-    for await (const e of Deno.watchFs(files)) {
+    const perform = debounce(async () => {
       await writeStyles(output, files);
+    });
+
+    perform();
+    for await (const e of Deno.watchFs(files)) {
+      perform();
     }
     return 0;
   }
