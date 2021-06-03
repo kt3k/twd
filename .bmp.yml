@@ -1,4 +1,7 @@
 version: 0.0.1
 commit: 'chore: bump to v%.%.%'
 files:
-  README.md: twindeno v%.%.%
+  README.md:
+    - twindeno v%.%.%
+  main.ts:
+    - 'const VERSION = "%.%.%";'
