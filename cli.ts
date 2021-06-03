@@ -7,7 +7,7 @@ import { generate, init, VirtualSheet } from "./mod.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
-const VERSION = "0.1.4";
+const VERSION = "0.1.5";
 
 function usage() {
   console.log(`
