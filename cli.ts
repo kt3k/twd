@@ -3,7 +3,7 @@
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
-import { init, generate, VirtualSheet } from "./mod.ts";
+import { generate, init, VirtualSheet } from "./mod.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
@@ -26,7 +26,11 @@ async function genStyles(files: string[], sheet: VirtualSheet) {
   return generate(await Promise.all(files.map(Deno.readTextFile)), sheet);
 }
 
-async function writeStyles(output: string, files: string[], sheet: VirtualSheet) {
+async function writeStyles(
+  output: string,
+  files: string[],
+  sheet: VirtualSheet,
+) {
   console.log(`Writing styles to file '${output}'`);
   await Deno.writeTextFile(output, await genStyles(files, sheet));
 }

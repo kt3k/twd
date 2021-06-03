@@ -6,13 +6,15 @@ import { setup } from "https://esm.sh/twind@0.16.13";
 import {
   getStyleTagProperties,
   shim,
-  virtualSheet,
   VirtualSheet,
+  virtualSheet,
 } from "https://esm.sh/twind@0.16.13/shim/server";
 
 export type { VirtualSheet };
-let sheet: VirtualSheet
-export function init({ mode }: { mode: "strict" | "silent" | "warn" }): VirtualSheet {
+let sheet: VirtualSheet;
+export function init(
+  { mode }: { mode: "strict" | "silent" | "warn" },
+): VirtualSheet {
   if (sheet) {
     return sheet;
   }
