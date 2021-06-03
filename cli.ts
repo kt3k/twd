@@ -37,7 +37,7 @@ type CliArgs = {
   _: string[];
 };
 
-async function main(cliArgs: string[]): Promise<number> {
+export async function main(cliArgs: string[]): Promise<number> {
   const {
     help,
     version,
@@ -91,4 +91,6 @@ async function main(cliArgs: string[]): Promise<number> {
   return 0;
 }
 
-Deno.exit(await main(Deno.args));
+if (import.meta.main) {
+  Deno.exit(await main(Deno.args));
+}
