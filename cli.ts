@@ -113,7 +113,10 @@ export const config: Config = {
     return 1;
   }
 
-  const sheet = initTwind({ ...await readConfig(), mode: debug ? "warn" : "silent" });
+  const sheet = initTwind({
+    ...await readConfig(),
+    mode: debug ? "warn" : "silent",
+  });
 
   if (watch) {
     if (!output) {
@@ -149,7 +152,9 @@ export async function readConfig(): Promise<Config> {
     config = (await import(path.href)).config;
     console.error(magenta(`Using config file: '${path}'`));
   } catch {
-    console.error(`Using default settings. You can configure it by 'twd.ts' config file.`);
+    console.error(
+      `Using default settings. You can configure it by 'twd.ts' config file.`,
+    );
     config = {};
   }
 

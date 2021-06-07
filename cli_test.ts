@@ -61,7 +61,10 @@ Deno.test("-o styles.css", async () => {
 
 Deno.test("readConfig reads config if it exists", async () => {
   const tmp = await Deno.makeTempDir();
-  await Deno.writeTextFile(tmp + "/twd.ts", 'export const config = { preflight: false }');
+  await Deno.writeTextFile(
+    tmp + "/twd.ts",
+    "export const config = { preflight: false }",
+  );
   let config: unknown;
   const cwd = Deno.cwd();
   try {
