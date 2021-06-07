@@ -56,7 +56,7 @@ twd -i
 This creates the config file 'twd.ts' like the below:
 
 ```ts
-import { Config } from "https://deno.land/x/twd@0.2.0/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.2.3/types.ts";
 
 export const config: Config = {
   preflight: true,
