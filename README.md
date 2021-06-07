@@ -1,4 +1,4 @@
-# twd v0.2.0
+# twd v0.2.1
 
 [![ci](https://github.com/kt3k/twd/actions/workflows/ci.yml/badge.svg)](https://github.com/kt3k/twd/actions/workflows/ci.yml)
 
@@ -9,7 +9,7 @@ This tool uses [twind](https://github.com/tw-in-js/twind) internally.
 # Install
 
 ```
-deno install --allow-read=. --allow-write=. -fq https://deno.land/x/twd@v0.2.0/cli.ts
+deno install --allow-read=. --allow-write=. -fq https://deno.land/x/twd@v0.2.1/cli.ts
 ```
 
 # Usage
