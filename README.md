@@ -60,11 +60,13 @@ import { Config } from "https://deno.land/x/twd@0.2.0/types.ts";
 
 export const config: Config = {
   preflight: true,
-  theme: {}
+  theme: {},
 };
 ```
 
-You can configure `preflight` and `theme` options. See [twind documentation](https://twind.dev/handbook/configuration.html#frontmatter-title) for details.
+You can configure `preflight` and `theme` options. See
+[twind documentation](https://twind.dev/handbook/configuration.html#frontmatter-title)
+for details.
 
 # TODOs
 
