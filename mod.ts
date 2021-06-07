@@ -2,7 +2,7 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
-import { setup } from "https://esm.sh/twind@0.16.13";
+import { Configuration, setup } from "https://esm.sh/twind@0.16.13";
 import {
   getStyleTagProperties,
   shim,
@@ -13,13 +13,17 @@ import {
 export type { VirtualSheet };
 let sheet: VirtualSheet;
 export function init(
-  { mode }: { mode: "strict" | "silent" | "warn" },
+  {
+    mode,
+    preflight,
+    theme,
+  }: Pick<Configuration, "preflight" | "theme" | "mode">,
 ): VirtualSheet {
   if (sheet) {
     return sheet;
   }
   sheet = virtualSheet();
-  setup({ sheet, mode });
+  setup({ sheet, mode, preflight, theme });
   return sheet;
 }
 export function generate(docs: string[], sheet: VirtualSheet): string {

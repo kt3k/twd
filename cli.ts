@@ -3,7 +3,10 @@
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
-import { generate, init, VirtualSheet } from "./mod.ts";
+import { join, toFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
+import { magenta, red } from "https://deno.land/std@0.97.0/fmt/colors.ts";
+import { generate, init as initTwind, VirtualSheet } from "./mod.ts";
+import { Config } from "./types.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
@@ -14,6 +17,7 @@ function usage() {
 Usage: ${NAME} [-h|-v] <input files, ...> [-w][-o <output>]
 
 Options:
+  -i, --init               Initializes 'twd.ts' config file.
   -w, --watch          Watches the input file. If you set this option, you also need to specify -o option.
   -o, --output         Specifies the output file. If not specified, it prints in stdout.
   -d, --debug          Output warnings during extracting tailwind classes.
@@ -41,6 +45,7 @@ type CliArgs = {
   watch: boolean;
   output: string;
   debug: boolean;
+  init: boolean;
   _: string[];
 };
 
@@ -51,9 +56,10 @@ export async function main(cliArgs: string[]): Promise<number> {
     watch,
     output,
     debug,
+    init,
     _: files,
   } = parse(cliArgs, {
-    boolean: ["help", "version", "watch", "debug"],
+    boolean: ["help", "version", "watch", "debug", "init"],
     string: ["output"],
     alias: {
       v: "version",
@@ -61,6 +67,7 @@ export async function main(cliArgs: string[]): Promise<number> {
       w: "watch",
       o: "output",
       d: "debug",
+      i: "init",
     },
   }) as CliArgs;
 
@@ -74,13 +81,39 @@ export async function main(cliArgs: string[]): Promise<number> {
     return 0;
   }
 
+  if (init) {
+    try {
+      await Deno.lstat("twd.ts");
+      console.log(red("Error: twd.ts already exists"));
+      return 1;
+    } catch (e) {
+      if (e.name === "NotFound") {
+        console.log("Creating config file 'twd.ts'");
+        await Deno.writeTextFile(
+          "twd.ts",
+          `
+import { Config } from "https://deno.land/x/twd@0.1.5/types.ts";
+
+export const config: Config = {
+  preflight: true,
+  theme: {}
+}
+`.trim() + "\n",
+        );
+        console.log("Done!");
+        return 0;
+      }
+      throw e;
+    }
+  }
+
   if (files.length === 0) {
-    console.log("No input is given");
+    console.error(red("No input is given"));
     usage();
     return 1;
   }
 
-  const sheet = init({ mode: debug ? "warn" : "silent" });
+  const sheet = initTwind({ ...await readConfig(), mode: debug ? "warn" : "silent" });
 
   if (watch) {
     if (!output) {
@@ -107,6 +140,20 @@ export async function main(cliArgs: string[]): Promise<number> {
   }
   console.log(await genStyles(files, sheet));
   return 0;
+}
+
+export async function readConfig(): Promise<Config> {
+  let config: Config;
+  try {
+    const path = toFileUrl(join(Deno.cwd(), "twd.ts"));
+    config = (await import(path.href)).config;
+    console.error(magenta(`Using config file: '${path}'`));
+  } catch {
+    console.error(`Using default settings. You can configure it by 'twd.ts' config file.`);
+    config = {};
+  }
+
+  return config;
 }
 
 if (import.meta.main) {
