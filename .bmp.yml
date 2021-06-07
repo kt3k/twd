@@ -6,4 +6,4 @@ files:
     - 'https://deno.land/x/twd@v%.%.%/cli.ts'
   cli.ts:
     - const VERSION = "%.%.%";
-    - '"https://deno.land/x/twd@%.%.%/types.ts";'
+    - '"https://deno.land/x/twd@v%.%.%/types.ts";'

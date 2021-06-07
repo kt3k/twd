@@ -92,12 +92,12 @@ export async function main(cliArgs: string[]): Promise<number> {
         await Deno.writeTextFile(
           "twd.ts",
           `
-import { Config } from "https://deno.land/x/twd@0.2.1/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.2.1/types.ts";
 
 export const config: Config = {
   preflight: true,
-  theme: {}
-}
+  theme: {},
+};
 `.trim() + "\n",
         );
         console.log("Done!");
