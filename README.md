@@ -9,7 +9,7 @@ This tool uses [twind](https://github.com/tw-in-js/twind) internally.
 # Install
 
 ```
-deno install --allow-read=. --allow-write=. -fq https://deno.land/x/twd@v0.2.2/cli.ts
+deno install --allow-read=. --allow-write=. --allow-net=deno.land,esm.sh,cdn.esm.sh -fq https://deno.land/x/twd@v0.2.2/cli.ts
 ```
 
 # Usage
@@ -72,6 +72,7 @@ for details.
 
 - Provide `twd/colors` module
 - Provide tailwind compatible purging
+- Do not require net permission in install command (this is required to import twd.ts from cwd)
 
 # License
 
