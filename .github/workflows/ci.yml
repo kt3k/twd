@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         deno:
-          - canary
+          - v1.x
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
