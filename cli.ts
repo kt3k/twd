@@ -95,14 +95,14 @@ export const config: Config = {
     }
   }
 
-  const files: string[] = []
+  const files: string[] = [];
   for (const path of paths) {
     try {
       files.push(...await expandFiles(path));
     } catch (e) {
       if (e.name === "NotFound") {
-	console.log(`Error: The given path not found: '${path}'`);
-	return 1;
+        console.log(`Error: The given path not found: '${path}'`);
+        return 1;
       }
       throw e;
     }
