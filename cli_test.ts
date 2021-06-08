@@ -2,7 +2,7 @@ import {
   assertEquals,
   assertStringIncludes,
 } from "https://deno.land/std@0.97.0/testing/asserts.ts";
-import { main, readConfig } from "./cli.ts";
+import { main, readConfig, expandFiles } from "./cli.ts";
 
 Deno.test("-h", async () => {
   const status = await main(["-h"]);
@@ -134,4 +134,14 @@ Deno.test("readConfig returns empty object if it does not exists", async () => {
     Deno.chdir(cwd);
   }
   assertEquals(config, {});
+});
+
+Deno.test("expandFiles", async () => {
+  const files = await expandFiles("testdata");
+  assertEquals(files.sort(), [
+    "testdata/foo.html",
+    "testdata/bar.html",
+    "testdata/baz.html",
+    "testdata/0/qux.html",
+  ].sort());
 });

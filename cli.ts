@@ -4,6 +4,7 @@
 /// <reference lib="esnext" />
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
 import { join, toFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
+import { walk } from "https://deno.land/std@0.97.0/fs/walk.ts";
 import { magenta, red } from "https://deno.land/std@0.97.0/fmt/colors.ts";
 import { generate, GenerateConfig } from "./mod.ts";
 import { Config } from "./types.ts";
@@ -44,7 +45,7 @@ export async function main(cliArgs: string[]): Promise<number> {
     output,
     debug,
     init,
-    _: files,
+    _: paths,
   } = parse(cliArgs, {
     boolean: ["help", "version", "watch", "debug", "init"],
     string: ["output"],
@@ -89,6 +90,19 @@ export const config: Config = {
         );
         console.log("Done!");
         return 0;
+      }
+      throw e;
+    }
+  }
+
+  const files: string[] = []
+  for (const path of paths) {
+    try {
+      files.push(...await expandFiles(path));
+    } catch (e) {
+      if (e.name === "NotFound") {
+	console.log(`Error: The given path not found: '${path}'`);
+	return 1;
       }
       throw e;
     }
@@ -158,6 +172,22 @@ export async function readConfig(): Promise<Config> {
     config = {};
   }
   return config;
+}
+
+export async function expandFiles(path: string): Promise<string[]> {
+  const result: string[] = [];
+  const stat = await Deno.lstat(path);
+  if (stat.isDirectory) {
+    for await (const entry of walk(path)) {
+      const stat = await Deno.lstat(entry.path);
+      if (!stat.isDirectory) {
+        result.push(entry.path);
+      }
+    }
+  } else {
+    result.push(path);
+  }
+  return result;
 }
 
 if (import.meta.main) {
