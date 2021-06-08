@@ -68,24 +68,26 @@ export const config: Config = {
 
 ## Theme
 
-Theming works almost the same way as [theming in tailwind](https://tailwindcss.com/docs/theme), or [theming in twind](https://twind.dev/handbook/configuration.html#theme).
+Theming works almost the same way as
+[theming in tailwind](https://tailwindcss.com/docs/theme), or
+[theming in twind](https://twind.dev/handbook/configuration.html#theme).
 
 The example of overriding values in the theme:
 
 ```ts
 import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
 
-export const config: Config = { 
+export const config: Config = {
   preflight: true,
   theme: {
     fontFamily: {
-      sans: ['Helvetica', 'sans-serif'],
-      serif: ['Times', 'serif'],
+      sans: ["Helvetica", "sans-serif"],
+      serif: ["Times", "serif"],
     },
     extend: {
       spacing: {
-        128: '32rem',
-        144: '36rem',
+        128: "32rem",
+        144: "36rem",
       },
     },
   },
@@ -94,13 +96,14 @@ export const config: Config = {
 
 ## Colors
 
-The Tailwind v2 compatible color palette is available from `https://deno.land/x/twd@v0.3.0/colors.ts`.
+The Tailwind v2 compatible color palette is available from
+`https://deno.land/x/twd@v0.3.0/colors.ts`.
 
 ```ts
 import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
 import * as colors from "https://deno.land/x/twd@v0.3.0/colors.ts";
 
-export const config: Config = { 
+export const config: Config = {
   theme: {
     colors: {
       // Build your palette here
@@ -119,27 +122,31 @@ To extend the existing color palette use theme.extend:
 import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
 import * as colors from "https://deno.land/x/twd@v0.3.0/colors.ts";
 
-export const config: Config = { 
+export const config: Config = {
   theme: {
     extend: {
       colors: {
         gray: colors.coolGray,
       },
-    },  
-  },  
+    },
+  },
 };
 ```
 
 ## Preflight
 
-`twd` automatically provides reset stylesheet, [modern-normalize](https://github.com/sindresorhus/modern-normalize), in the same way as [tailwind](https://tailwindcss.com/docs/preflight) or [twind](https://twind.dev/handbook/configuration.html#preflight). By default `twd` inserts these styles at the beginning of the other styles.
+`twd` automatically provides reset stylesheet,
+[modern-normalize](https://github.com/sindresorhus/modern-normalize), in the
+same way as [tailwind](https://tailwindcss.com/docs/preflight) or
+[twind](https://twind.dev/handbook/configuration.html#preflight). By default
+`twd` inserts these styles at the beginning of the other styles.
 
 This behavior can be disabled by `preflight` option in 'twd.ts' config file.
 
 ```ts
 import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
 
-export const config: Config = { 
+export const config: Config = {
   preflight: false,
 };
 ```
