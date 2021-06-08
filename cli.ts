@@ -153,7 +153,7 @@ export async function readConfig(): Promise<Config> {
     console.error(magenta(`Using config file: '${path}'`));
   } catch {
     console.error(
-      `Using default settings. You can configure it by 'twd.ts' config file.`,
+      `Using default settings. You can optionally configure it by 'twd.ts' config file.`,
     );
     config = {};
   }

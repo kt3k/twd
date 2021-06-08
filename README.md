@@ -14,7 +14,7 @@ deno install --allow-read=. --allow-write=. --allow-net=deno.land,esm.sh,cdn.esm
 
 # Usage
 
-Call `twd` command with html file input.
+Call `twd` command with input html files.
 
 ```sh
 twd input.html
@@ -26,11 +26,10 @@ file.
 You can specify more than 1 input file.
 
 ```sh
-twd input-a.html input-b.html
+twd input-foo.html input-bar.html
 ```
 
-This outputs the stylesheet which include classes needed by any of the input
-files.
+This outputs the stylesheet for both input-foo.html and input-bar.html.
 
 ## Watch files
 

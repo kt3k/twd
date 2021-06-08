@@ -2,10 +2,9 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
-import { Configuration, setup } from "https://esm.sh/twind@0.16.13";
+import { tw, Configuration, setup } from "https://esm.sh/twind@0.16.13";
 import {
   getStyleTagProperties,
-  shim,
   VirtualSheet,
   virtualSheet,
 } from "https://esm.sh/twind@0.16.13/shim/server";
@@ -29,7 +28,10 @@ export function init(
 export function generate(docs: string[], sheet: VirtualSheet): string {
   sheet.reset();
   for (const html of docs) {
-    shim(html);
+    const patterns = html.match(/[^<>"'`\s]*[^<>"'`\s:]/g);
+    if (patterns) {
+      tw(...patterns);
+    }
   }
   const { textContent } = getStyleTagProperties(sheet);
   return textContent;
