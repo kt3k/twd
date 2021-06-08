@@ -36,7 +36,7 @@ Deno.test("-i option and config reading", async () => {
   // Run `twd test.html -o styles.css` with config file
   try {
     Deno.chdir(tmp);
-    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>` );
+    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>`);
     await main(["test.html", "-o", "styles.css"]);
     styles = await Deno.readTextFile("styles.css");
   } finally {
@@ -53,7 +53,7 @@ Deno.test("-i option and config reading", async () => {
     Deno.chdir(cwd);
   }
   assertEquals(status, 1);
-})
+});
 
 Deno.test("use custom config", async () => {
   const cwd = Deno.cwd();
@@ -62,8 +62,10 @@ Deno.test("use custom config", async () => {
   // Run `twd test.html -o styles.css` with gray color configured
   try {
     Deno.chdir(tmp);
-    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>` );
-    await Deno.writeTextFile("twd.ts", `import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
+    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>`);
+    await Deno.writeTextFile(
+      "twd.ts",
+      `import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
 import * as colors from "https://deno.land/x/twd@v0.3.0/colors.ts";
 
 export const config: Config = {
@@ -74,7 +76,8 @@ export const config: Config = {
       },
     },
   },
-};` );
+};`,
+    );
     Deno.chdir(tmp);
     await main(["test.html", "-o", "styles.css"]);
     styles = await Deno.readTextFile("styles.css");

@@ -4,7 +4,10 @@ import { generate } from "./mod.ts";
 const config = { mode: "silent" } as const;
 
 Deno.test("integration test", async () => {
-  const styles = await generate([`<body class="bg-purple-500"></body>`], config);
+  const styles = await generate(
+    [`<body class="bg-purple-500"></body>`],
+    config,
+  );
   assertStringIncludes(
     styles,
     ".bg-purple-500",
