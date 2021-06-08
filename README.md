@@ -158,9 +158,7 @@ export const config: Config = {
 
 # TODOs
 
-- Provide tailwind compatible purging
-- Do not require net permission in install command (this is required to import
-  twd.ts from cwd)
+- Maybe support glob input?
 
 # License
 
