@@ -159,6 +159,7 @@ export const config: Config = {
 # TODOs
 
 - Maybe support glob input?
+- Expose APIs like `generate(files, opts)`, `watch(files, opts)` to enable easily integrate this tool into another tool.
 
 # License
 
