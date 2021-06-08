@@ -2,7 +2,7 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
-import { tw, Configuration, setup } from "https://esm.sh/twind@0.16.13";
+import { tw, create, Configuration, setup } from "https://esm.sh/twind@0.16.13";
 import {
   getStyleTagProperties,
   VirtualSheet,

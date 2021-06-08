@@ -157,6 +157,7 @@ export async function readConfig(): Promise<Config> {
     );
     config = {};
   }
+  console.log('config', JSON.stringify(config));
 
   return config;
 }

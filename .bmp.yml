@@ -8,4 +8,7 @@ files:
     - 'https://deno.land/x/twd@v%.%.%/colors.ts'
   cli.ts:
     - const VERSION = "%.%.%";
-    - '"https://deno.land/x/twd@v%.%.%/types.ts";'
+    - 'https://deno.land/x/twd@v%.%.%/types.ts'
+  cli_test.ts:
+    - 'https://deno.land/x/twd@v%.%.%/types.ts'
+    - 'https://deno.land/x/twd@v%.%.%/colors.ts'

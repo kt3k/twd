@@ -14,11 +14,14 @@ Deno.test("-v", async () => {
   assertEquals(status, 0);
 });
 
-Deno.test("-i", async () => {
+Deno.test("-i option and config reading", async () => {
   const cwd = Deno.cwd();
   const tmp = await Deno.makeTempDir();
   let config: string;
   let status: number;
+  let styles: string;
+
+  // Run `twd -i`
   try {
     Deno.chdir(tmp);
     status = await main(["-i"]);
@@ -30,15 +33,58 @@ Deno.test("-i", async () => {
   assertStringIncludes(config, `import { Config } from`);
   assertStringIncludes(config, `export const config: Config = {`);
 
+  // Run `twd test.html -o styles.css` with config file
+  try {
+    Deno.chdir(tmp);
+    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>` );
+    await main(["test.html", "-o", "styles.css"]);
+    styles = await Deno.readTextFile("styles.css");
+  } finally {
+    Deno.chdir(cwd);
+  }
+  assertStringIncludes(styles, ".text-gray-500");
+  assertStringIncludes(styles, "#6b7280"); // coolGray 500 (default)
+
+  // Run `twd -i`, but twd.ts already exists
   try {
     Deno.chdir(tmp);
     status = await main(["-i"]);
   } finally {
     Deno.chdir(cwd);
   }
-  // It fails on the 2nd time because the config file is already there
   assertEquals(status, 1);
+})
+
+/*
+Deno.test("use custom config", async () => {
+  const cwd = Deno.cwd();
+  const tmp = await Deno.makeTempDir();
+  let styles: string;
+  // Run `twd test.html -o styles.css` with gray color configured
+  try {
+    Deno.chdir(tmp);
+    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>` );
+    await Deno.writeTextFile("twd.ts", `import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.3.0/colors.ts";
+
+export const config: Config = {
+  theme: {
+    extend: {
+      colors: {
+        gray: colors.trueGray,
+      },
+    },
+  },
+};` );
+    Deno.chdir(tmp);
+    await main(["test.html", "-o", "styles.css"]);
+    styles = await Deno.readTextFile("styles.css");
+  } finally {
+    Deno.chdir(cwd);
+  }
+  assertStringIncludes(styles, "#737373"); // trueGray 500
 });
+*/
 
 Deno.test("no input files", async () => {
   const status = await main([]);
