@@ -11,7 +11,7 @@ import { Config } from "./types.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
 const NAME = "twd";
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 
 function usage() {
   console.log(`
@@ -80,7 +80,7 @@ export async function main(cliArgs: string[]): Promise<number> {
         await Deno.writeTextFile(
           "twd.ts",
           `
-import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
 
 export const config: Config = {
   preflight: true,

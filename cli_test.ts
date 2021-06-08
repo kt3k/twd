@@ -65,8 +65,8 @@ Deno.test("use custom config", async () => {
     await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>`);
     await Deno.writeTextFile(
       "twd.ts",
-      `import { Config } from "https://deno.land/x/twd@v0.3.0/types.ts";
-import * as colors from "https://deno.land/x/twd@v0.3.0/colors.ts";
+      `import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.3.1/colors.ts";
 
 export const config: Config = {
   theme: {
