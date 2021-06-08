@@ -126,7 +126,7 @@ export const config: Config = {
   theme: {
     extend: {
       colors: {
-        gray: colors.coolGray,
+        gray: colors.trueGray,
       },
     },
   },
