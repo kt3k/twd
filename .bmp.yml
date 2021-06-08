@@ -5,6 +5,7 @@ files:
     - twd v%.%.%
     - 'https://deno.land/x/twd@v%.%.%/cli.ts'
     - 'https://deno.land/x/twd@v%.%.%/types.ts'
+    - 'https://deno.land/x/twd@v%.%.%/colors.ts'
   cli.ts:
     - const VERSION = "%.%.%";
     - '"https://deno.land/x/twd@v%.%.%/types.ts";'

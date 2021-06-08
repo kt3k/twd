@@ -43,14 +43,16 @@ twd -w input-a.html input-b.html -o styles.css
 When you use `-w` option, you also need to specify `-o, --output` option, which
 specifies the output file for generated styles.
 
-## Configuration
+# Config
 
-You can configure the output through 'twd.ts' file.
+You can configure the output styles through config file 'twd.ts'.
 
 You can create the boilerplate code with `-i` (--init) option.
 
-```sh
-twd -i
+```shellsession
+$ twd -i
+Creating config file 'twd.ts'
+Done!
 ```
 
 This creates the config file 'twd.ts' like the below:
@@ -64,13 +66,86 @@ export const config: Config = {
 };
 ```
 
-You can configure `preflight` and `theme` options. See
-[twind documentation](https://twind.dev/handbook/configuration.html#frontmatter-title)
-for details.
+## Theme
+
+Theming works almost the same way as [theming in tailwind](https://tailwindcss.com/docs/theme), or [theming in twind](https://twind.dev/handbook/configuration.html#theme).
+
+The example of overriding values in the theme:
+
+```ts
+import { Config } from "https://deno.land/x/twd@v0.2.3/types.ts";
+
+export const config: Config = { 
+  preflight: true,
+  theme: {
+    fontFamily: {
+      sans: ['Helvetica', 'sans-serif'],
+      serif: ['Times', 'serif'],
+    },
+    extend: {
+      spacing: {
+        128: '32rem',
+        144: '36rem',
+      },
+    },
+  },
+};
+```
+
+## Colors
+
+The Tailwind v2 compatible color palette is available from `https://deno.land/x/twd@v0.2.3/colors.ts`.
+
+```ts
+import { Config } from "https://deno.land/x/twd@v0.2.3/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.2.3/colors.ts";
+
+export const config: Config = { 
+  theme: {
+    colors: {
+      // Build your palette here
+      gray: colors.trueGray,
+      red: colors.red,
+      blue: colors.lightBlue,
+      yellow: colors.amber,
+    },
+  },
+};
+```
+
+To extend the existing color palette use theme.extend:
+
+```ts
+import { Config } from "https://deno.land/x/twd@v0.2.3/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.2.3/colors.ts";
+
+export const config: Config = { 
+  theme: {
+    extend: {
+      colors: {
+        gray: colors.coolGray,
+      },
+    },  
+  },  
+};
+```
+
+## Preflight
+
+`twd` automatically provides reset stylesheet, [modern-normalize](https://github.com/sindresorhus/modern-normalize), in the same way as [tailwind](https://tailwindcss.com/docs/preflight) or [twind](https://twind.dev/handbook/configuration.html#preflight). By default `twd` inserts these styles at the beginning of the other styles.
+
+This behavior can be disabled by `preflight` option in 'twd.ts' config file.
+
+```ts
+import { Config } from "https://deno.land/x/twd@v0.2.3/types.ts";
+
+export const config: Config = { 
+  preflight: false,
+};
+```
 
 # TODOs
 
-- Provide `twd/colors` module
 - Provide tailwind compatible purging
 - Do not require net permission in install command (this is required to import
   twd.ts from cwd)
