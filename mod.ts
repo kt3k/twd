@@ -2,36 +2,25 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
-import { tw, create, Configuration, setup } from "https://esm.sh/twind@0.16.13";
+import { create, Configuration, setup } from "https://esm.sh/twind@0.16.13";
 import {
   getStyleTagProperties,
   VirtualSheet,
   virtualSheet,
 } from "https://esm.sh/twind@0.16.13/shim/server";
 
-export type { VirtualSheet };
-let sheet: VirtualSheet;
-export function init(
-  {
-    mode,
-    preflight,
-    theme,
-  }: Pick<Configuration, "preflight" | "theme" | "mode">,
-): VirtualSheet {
-  if (sheet) {
-    return sheet;
-  }
-  sheet = virtualSheet();
-  setup({ sheet, mode, preflight, theme });
-  return sheet;
-}
-export function generate(docs: string[], sheet: VirtualSheet): string {
+export type GenerateConfig = Pick<Configuration, "preflight" | "theme" | "mode">;
+export function generate(docs: string[],   {
+  mode,
+  preflight,
+  theme,
+}: GenerateConfig,
+): string {
+  const sheet = virtualSheet();
+  const { tw } = create({ sheet, mode, preflight, theme });
   sheet.reset();
   for (const html of docs) {
-    const patterns = html.match(/[^<>"'`\s]*[^<>"'`\s:]/g);
-    if (patterns) {
-      tw(...patterns);
-    }
+    tw(...(html.match(/[^<>"'`\s]*[^<>"'`\s:]/g) ?? []));
   }
   const { textContent } = getStyleTagProperties(sheet);
   return textContent;

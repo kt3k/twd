@@ -5,7 +5,7 @@
 import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
 import { join, toFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
 import { magenta, red } from "https://deno.land/std@0.97.0/fmt/colors.ts";
-import { generate, init as initTwind, VirtualSheet } from "./mod.ts";
+import { generate, GenerateConfig } from "./mod.ts";
 import { Config } from "./types.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
@@ -24,19 +24,6 @@ Options:
   -v, --version        Shows the version number.
   -h, --help           Shows the help message.
 `.trim());
-}
-
-async function genStyles(files: string[], sheet: VirtualSheet) {
-  return generate(await Promise.all(files.map(Deno.readTextFile)), sheet);
-}
-
-async function writeStyles(
-  output: string,
-  files: string[],
-  sheet: VirtualSheet,
-) {
-  console.log(`Writing styles to file '${output}'`);
-  await Deno.writeTextFile(output, await genStyles(files, sheet));
 }
 
 type CliArgs = {
@@ -113,10 +100,10 @@ export const config: Config = {
     return 1;
   }
 
-  const sheet = initTwind({
+  const config: GenerateConfig = {
     ...await readConfig(),
     mode: debug ? "warn" : "silent",
-  });
+  };
 
   if (watch) {
     if (!output) {
@@ -127,7 +114,7 @@ export const config: Config = {
     }
 
     const perform = debounce(async () => {
-      await writeStyles(output, files, sheet);
+      await writeStyles(output, files, config);
     });
 
     perform();
@@ -138,11 +125,24 @@ export const config: Config = {
   }
 
   if (output) {
-    await writeStyles(output, files, sheet);
+    await writeStyles(output, files, config);
     return 0;
   }
-  console.log(await genStyles(files, sheet));
+  console.log(await genStyles(files, config));
   return 0;
+}
+
+async function genStyles(files: string[], config: GenerateConfig) {
+  return generate(await Promise.all(files.map(Deno.readTextFile)), config);
+}
+
+async function writeStyles(
+  output: string,
+  files: string[],
+  config: GenerateConfig,
+) {
+  console.log(`Writing styles to file '${output}'`);
+  await Deno.writeTextFile(output, await genStyles(files, config));
 }
 
 export async function readConfig(): Promise<Config> {
@@ -157,8 +157,6 @@ export async function readConfig(): Promise<Config> {
     );
     config = {};
   }
-  console.log('config', JSON.stringify(config));
-
   return config;
 }
 

@@ -55,7 +55,6 @@ Deno.test("-i option and config reading", async () => {
   assertEquals(status, 1);
 })
 
-/*
 Deno.test("use custom config", async () => {
   const cwd = Deno.cwd();
   const tmp = await Deno.makeTempDir();
@@ -84,7 +83,6 @@ export const config: Config = {
   }
   assertStringIncludes(styles, "#737373"); // trueGray 500
 });
-*/
 
 Deno.test("no input files", async () => {
   const status = await main([]);
