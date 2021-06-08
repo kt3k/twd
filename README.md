@@ -31,6 +31,12 @@ twd input-foo.html input-bar.html
 
 This outputs the stylesheet for both input-foo.html and input-bar.html.
 
+Or you can input the files under the directory by specifying the directory.
+
+```sh
+twd dir/
+```
+
 ## Watch files
 
 You can watch files with `-w, --watch` option.
