@@ -14,10 +14,10 @@ const VERSION = "0.3.0";
 
 function usage() {
   console.log(`
-Usage: ${NAME} [-h|-v] <input files, ...> [-w][-o <output>]
+Usage: ${NAME} [-h|-v|-i] <input files, ...> [-d][-w][-o <output>]
 
 Options:
-  -i, --init               Initializes 'twd.ts' config file.
+  -i, --init           Initializes 'twd.ts' config file.
   -w, --watch          Watches the input file. If you set this option, you also need to specify -o option.
   -o, --output         Specifies the output file. If not specified, it prints in stdout.
   -d, --debug          Output warnings during extracting tailwind classes.
