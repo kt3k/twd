@@ -156,11 +156,28 @@ export const config: Config = {
 };
 ```
 
+## Plugins
+
+You can provide [plugins][twind-plugins]. Plugins are not tailwind compatible, but it follows the rules of [twind plugins][twind-plugins].
+
+In twd.ts:
+
+```ts
+export config: Config = {
+  plugins: {
+    'scroll-snap': (parts) => ({ 'scroll-snap-type': parts[0] }),
+  },
+};
+```
+
+This generates the style `.scroll-snap-x { scroll-snap-type: x; }` in the output. See more details in [twind plugin docs][twind-plugins] about what kind of plugins are possible.
+
 # TODOs
 
-- Maybe support glob input?
 - Expose APIs like `generate(files, opts)`, `watch(files, opts)` to enable easily integrate this tool into another tool.
 
 # License
 
 MIT
+
+[twind-plugins]: https://twind.dev/handbook/plugins.html
