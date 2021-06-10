@@ -59,16 +59,21 @@ Deno.test("use custom config", async () => {
   const cwd = Deno.cwd();
   const tmp = await Deno.makeTempDir();
   let styles: string;
-  // Run `twd test.html -o styles.css` with gray color configured
+  // Run `twd test.html -o styles.css` with custom config
   try {
     Deno.chdir(tmp);
-    await Deno.writeTextFile("test.html", `<p class="text-gray-500"></p>`);
+    await Deno.writeTextFile("test.html", `<p class="text-gray-500 scroll-snap-x"></p>`);
     await Deno.writeTextFile(
       "twd.ts",
-      `import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
+      `/// <reference no-default-lib="true"/>
+/// <reference lib="deno.ns" />
+/// <reference lib="dom" />
+/// <reference lib="esnext" />
+import { Configuration } from "https://esm.sh/twind@0.16.13";
 import * as colors from "https://deno.land/x/twd@v0.3.1/colors.ts";
 
-export const config: Config = {
+export const config: Configuration = {
+  preflight: false,
   theme: {
     extend: {
       colors: {
@@ -76,6 +81,9 @@ export const config: Config = {
       },
     },
   },
+  plugins: {
+    'scroll-snap': (parts) => ({ 'scroll-snap-type': parts[0] }),
+  }
 };`,
     );
     Deno.chdir(tmp);
@@ -85,6 +93,7 @@ export const config: Config = {
     Deno.chdir(cwd);
   }
   assertStringIncludes(styles, "#737373"); // trueGray 500
+  assertStringIncludes(styles, ".scroll-snap-x{scroll-snap-type:x}"); // trueGray 500
 });
 
 Deno.test("no input files", async () => {

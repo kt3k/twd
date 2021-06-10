@@ -85,6 +85,7 @@ import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
 export const config: Config = {
   preflight: true,
   theme: {},
+  plugins: {},
 };
 `.trim() + "\n",
         );
