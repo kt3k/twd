@@ -130,12 +130,12 @@ export const config: Config = {
       return 1;
     }
 
-    const perform = debounce(async () => {
+    const perform = debounce(async (retry?: boolean) => {
       try {
         await writeStyles(output, files, info);
       } catch (e) {
-        if (e.name === "NotFound") {
-          await perform();
+        if (e.name === "NotFound" && !retry) {
+          await perform(true);
           return;
         }
         throw e;

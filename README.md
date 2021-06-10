@@ -159,7 +159,7 @@ export const config: Config = {
 
 ## Plugins
 
-You can provide [plugins][twind-plugins]. Plugins are not tailwind compatible,
+You can provide [plugins][twind-plugins] in config file. Plugins are not tailwind compatible,
 but it follows the rules of [twind plugins][twind-plugins].
 
 In twd.ts:
