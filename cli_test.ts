@@ -62,7 +62,10 @@ Deno.test("use custom config", async () => {
   // Run `twd test.html -o styles.css` with custom config
   try {
     Deno.chdir(tmp);
-    await Deno.writeTextFile("test.html", `<p class="text-gray-500 scroll-snap-x"></p>`);
+    await Deno.writeTextFile(
+      "test.html",
+      `<p class="text-gray-500 scroll-snap-x"></p>`,
+    );
     await Deno.writeTextFile(
       "twd.ts",
       `/// <reference no-default-lib="true"/>

@@ -9,7 +9,7 @@ import {
   virtualSheet,
 } from "https://esm.sh/twind@0.16.13/shim/server";
 
-export type GenerateConfig = Config & Pick< Configuration, "mode">;
+export type GenerateConfig = Config & Pick<Configuration, "mode">;
 export function generate(docs: string[], {
   mode,
   preflight,
