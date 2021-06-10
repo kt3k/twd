@@ -1,4 +1,4 @@
-# twd v0.3.1
+# twd v0.4.0
 
 [![ci](https://github.com/kt3k/twd/actions/workflows/ci.yml/badge.svg)](https://github.com/kt3k/twd/actions/workflows/ci.yml)
 
@@ -9,7 +9,7 @@ This tool uses [twind](https://github.com/tw-in-js/twind) internally.
 # Install
 
 ```
-deno install --allow-read=. --allow-write=. --allow-net=deno.land,esm.sh,cdn.esm.sh -fq https://deno.land/x/twd@v0.3.1/cli.ts
+deno install --allow-read=. --allow-write=. --allow-net=deno.land,esm.sh,cdn.esm.sh -fq https://deno.land/x/twd@v0.4.0/cli.ts
 ```
 
 # Usage
@@ -63,7 +63,7 @@ Done!
 This creates the config file 'twd.ts' like the below:
 
 ```ts
-import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.4.0/types.ts";
 
 export const config: Config = {
   preflight: true,
@@ -80,7 +80,7 @@ Theming works almost the same way as
 The example of overriding values in the theme:
 
 ```ts
-import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.4.0/types.ts";
 
 export const config: Config = {
   preflight: true,
@@ -102,11 +102,11 @@ export const config: Config = {
 ## Colors
 
 The Tailwind v2 compatible color palette is available from
-`https://deno.land/x/twd@v0.3.1/colors.ts`.
+`https://deno.land/x/twd@v0.4.0/colors.ts`.
 
 ```ts
-import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
-import * as colors from "https://deno.land/x/twd@v0.3.1/colors.ts";
+import { Config } from "https://deno.land/x/twd@v0.4.0/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.4.0/colors.ts";
 
 export const config: Config = {
   theme: {
@@ -124,8 +124,8 @@ export const config: Config = {
 To extend the existing color palette use theme.extend:
 
 ```ts
-import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
-import * as colors from "https://deno.land/x/twd@v0.3.1/colors.ts";
+import { Config } from "https://deno.land/x/twd@v0.4.0/types.ts";
+import * as colors from "https://deno.land/x/twd@v0.4.0/colors.ts";
 
 export const config: Config = {
   theme: {
@@ -149,7 +149,7 @@ same way as [tailwind](https://tailwindcss.com/docs/preflight) or
 This behavior can be disabled by `preflight` option in 'twd.ts' config file.
 
 ```ts
-import { Config } from "https://deno.land/x/twd@v0.3.1/types.ts";
+import { Config } from "https://deno.land/x/twd@v0.4.0/types.ts";
 
 export const config: Config = {
   preflight: false,
