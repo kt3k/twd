@@ -6,7 +6,7 @@ import { parse } from "https://deno.land/std@0.97.0/flags/mod.ts";
 import { join, toFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
 import { walk } from "https://deno.land/std@0.97.0/fs/walk.ts";
 import { magenta, red } from "https://deno.land/std@0.97.0/fmt/colors.ts";
-import { generate, GenerateConfig } from "./mod.ts";
+import { generate, GenerateConfig, init as initTw, TwInfo } from "./mod.ts";
 import { Config } from "./types.ts";
 import debounce from "https://esm.sh/debounce@1.2.1";
 
@@ -120,6 +120,8 @@ export const config: Config = {
     mode: debug ? "warn" : "silent",
   };
 
+  const info: TwInfo = initTw(config);
+
   if (watch) {
     if (!output) {
       console.log(
@@ -129,7 +131,7 @@ export const config: Config = {
     }
 
     const perform = debounce(async () => {
-      await writeStyles(output, files, config);
+      await writeStyles(output, files, info);
     });
 
     perform();
@@ -140,16 +142,19 @@ export const config: Config = {
   }
 
   if (output) {
-    await writeStyles(output, files, config);
+    await writeStyles(output, files, info);
     return 0;
   }
-  console.log(await genStyles(files, config));
+  console.log(await genStyles(files, info));
   return 0;
 }
 
-async function genStyles(files: string[], config: GenerateConfig) {
+async function genStyles(files: string[], info: TwInfo) {
   const start = Date.now();
-  const styles = generate(await Promise.all(files.map(Deno.readTextFile)), config);
+  const styles = generate(
+    await Promise.all(files.map(Deno.readTextFile)),
+    info,
+  );
   console.log(`Builtin ${Date.now() - start}ms`);
   return styles;
 }
@@ -157,10 +162,10 @@ async function genStyles(files: string[], config: GenerateConfig) {
 async function writeStyles(
   output: string,
   files: string[],
-  config: GenerateConfig,
+  info: TwInfo,
 ) {
   console.log(`Writing styles to file '${output}'`);
-  await Deno.writeTextFile(output, await genStyles(files, config));
+  await Deno.writeTextFile(output, await genStyles(files, info));
 }
 
 export async function readConfig(): Promise<Config> {
