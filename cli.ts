@@ -148,7 +148,10 @@ export const config: Config = {
 }
 
 async function genStyles(files: string[], config: GenerateConfig) {
-  return generate(await Promise.all(files.map(Deno.readTextFile)), config);
+  const start = Date.now();
+  const styles = generate(await Promise.all(files.map(Deno.readTextFile)), config);
+  console.log(`Builtin ${Date.now() - start}ms`);
+  return styles;
 }
 
 async function writeStyles(

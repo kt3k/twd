@@ -20,7 +20,20 @@ export function generate(docs: string[], {
   const { tw } = create({ sheet, mode, preflight, theme, plugins });
   sheet.reset();
   for (const html of docs) {
-    tw(...(html.match(/[^<>"'`\s]*[^<>"'`\s:]/g) ?? []));
+    const m = html.match(/[^<>\[\]\(\)|&"'`\.\s]*[^<>\[\]\(\)|&"'`\.\s:]/g);
+    if (m) {
+      for (const c of m) {
+        if (c === "toLocaleString") {
+          continue;
+        }
+        try {
+          tw(c);
+        } catch (e) {
+          console.log(`Error: Failed to handle the pattern '${c}'`);
+          throw e;
+        }
+      }
+    }
   }
   const { textContent } = getStyleTagProperties(sheet);
   return textContent;
