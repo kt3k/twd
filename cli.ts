@@ -131,7 +131,15 @@ export const config: Config = {
     }
 
     const perform = debounce(async () => {
-      await writeStyles(output, files, info);
+      try {
+        await writeStyles(output, files, info);
+      } catch (e) {
+        if (e.name === "NotFound") {
+          await perform();
+          return;
+        }
+        throw e;
+      }
     });
 
     perform();
