@@ -73,7 +73,7 @@ Deno.test("use custom config", async () => {
 /// <reference lib="dom" />
 /// <reference lib="esnext" />
 import { Configuration } from "https://esm.sh/twind@0.16.13";
-import * as colors from "https://deno.land/x/twd@v0.4.3/colors.ts";
+import * as colors from "https://deno.land/x/twd@v0.4.4/colors.ts";
 
 export const config: Configuration = {
   preflight: false,
