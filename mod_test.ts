@@ -35,6 +35,6 @@ Deno.test("exception words", () => {
   // See https://github.com/tw-in-js/twind/issues/189 for details.
   generate([
     "toLocaleString",
-    "__defineGetter__"
+    "__defineGetter__",
   ], info);
 });
