@@ -28,3 +28,13 @@ Deno.test("integration test 2", async () => {
   assertStringIncludes(styles, ".bg-red-800");
   assertStringIncludes(styles, ".bg-gray-900");
 });
+
+Deno.test("exception words", () => {
+  // This test case checks that special words which has problem with twind
+  // don't throw.
+  // See https://github.com/tw-in-js/twind/issues/189 for details.
+  generate([
+    "toLocaleString",
+    "__defineGetter__",
+  ], info);
+});
