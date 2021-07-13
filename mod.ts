@@ -36,7 +36,8 @@ export function generate(docs: string[], { tw, sheet }: TwInfo): string {
     const m = html.match(/[^<>\[\]\(\)|&"'`\.\s]*[^<>\[\]\(\)|&"'`\.\s:]/g);
     if (m) {
       for (const c of m) {
-        if (c === "toLocaleString") {
+        // See https://github.com/tw-in-js/twind/issues/189
+        if (c === "toLocaleString" || c === "__defineGetter__") {
           continue;
         }
         try {
