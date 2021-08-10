@@ -37,7 +37,10 @@ export function generate(docs: string[], { tw, sheet }: TwInfo): string {
     if (m) {
       for (const c of m) {
         // See https://github.com/tw-in-js/twind/issues/189
-        if (c === "toLocaleString" || c === "__defineGetter__" || c === "hasOwnProperty") {
+        if (
+          c === "toLocaleString" || c === "__defineGetter__" ||
+          c === "hasOwnProperty"
+        ) {
           continue;
         }
         try {
