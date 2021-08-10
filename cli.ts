@@ -160,7 +160,7 @@ export const config: Config = {
 async function genStyles(files: string[], info: TwInfo) {
   const start = Date.now();
   const styles = generate(
-    await Promise.all(files.map(Deno.readTextFile)),
+    await Promise.all(files.map((file) => Deno.readTextFile(file))),
     info,
   );
   console.log(`Builtin ${Date.now() - start}ms`);
