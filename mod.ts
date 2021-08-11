@@ -38,8 +38,11 @@ export function generate(docs: string[], { tw, sheet }: TwInfo): string {
       for (const c of m) {
         // See https://github.com/tw-in-js/twind/issues/189
         if (
-          c === "toLocaleString" || c === "__defineGetter__" ||
-          c === "hasOwnProperty"
+          c === "__defineGetter__" || c === "__defineSetter__" ||
+          c === "__lookupGetter__" || c === "__lookupSetter__" ||
+          c === "hasOwnProperty" || c === "isPrototypeOf" ||
+          c === "propertyIsEnumerable" || c === "valueOf" ||
+          c === "toLocaleString"
         ) {
           continue;
         }

@@ -34,7 +34,14 @@ Deno.test("exception words", () => {
   // don't throw.
   // See https://github.com/tw-in-js/twind/issues/189 for details.
   generate([
-    "toLocaleString",
     "__defineGetter__",
+    "__defineSetter__",
+    "__lookupGetter__",
+    "__lookupSetter__",
+    "hasOwnProperty",
+    "isPrototypeOf",
+    "propertyIsEnumerable",
+    "toLocaleString",
+    "valueOf",
   ], info);
 });
